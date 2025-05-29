@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 // import 'package:real_sudoku/pages/board/board.dart';
-// import 'package:real_sudoku/pages/home_page.dart';
-import 'package:real_sudoku/pages/root_page.dart';
+import 'package:real_sudoku/pages/home_page.dart';
+// import 'package:real_sudoku/pages/root_page.dart';
 import 'package:real_sudoku/pages/signin_page.dart';
 
 void main() {
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Sudoku',
+      title: 'Real Sudoku',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF4E71FF)),
         useMaterial3: true,
@@ -26,8 +26,8 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        // '/': (_) => const HomePage(),
-        '/': (_) => true ? SigninPage() : const RootPage(),
+        '/': (_) => const HomePage(),
+        // '/': (_) => true ? SigninPage() : const RootPage(),
         '/signin': (_) => const SigninPage(),
         // '/board': (_) => const Board(),
       },

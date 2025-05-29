@@ -3,7 +3,13 @@ import 'package:real_sudoku/pages/board/sudoku_cell.dart';
 
 class SudokuBoard extends StatefulWidget {
   final List<List<int>> sudokuGrid;
-  const SudokuBoard({super.key, required this.sudokuGrid});
+  final Map<String, int?> selectedCell;
+  final Function(int row, int col) onCellPress;
+  const SudokuBoard(
+      {super.key,
+      required this.sudokuGrid,
+      required this.selectedCell,
+      required this.onCellPress});
 
   @override
   State<SudokuBoard> createState() => _SudokuBoardState();
@@ -46,6 +52,10 @@ class _SudokuBoardState extends State<SudokuBoard> {
                 value: _grid[row][col],
                 row: row,
                 col: col,
+                isPreFilled: _grid[row][col] != 0,
+                isSelected: widget.selectedCell['row'] == row &&
+                    widget.selectedCell['col'] == col,
+                onPress: () => widget.onCellPress(row, col),
               );
             },
           ),

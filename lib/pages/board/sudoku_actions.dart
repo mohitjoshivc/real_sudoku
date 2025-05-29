@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class SudokuActions extends StatefulWidget {
-  const SudokuActions({super.key});
+class SudokuActions extends StatelessWidget {
+  final bool isAnyCellSelected;
+  final Function(int value)? onCellValueChange;
+  const SudokuActions(
+      {super.key,
+      required this.isAnyCellSelected,
+      required this.onCellValueChange});
 
-  @override
-  State<SudokuActions> createState() => _SudokuActionsState();
-}
-
-class _SudokuActionsState extends State<SudokuActions> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -51,11 +51,17 @@ class _SudokuActionsState extends State<SudokuActions> {
             children: List.generate(9, (index) {
               return Expanded(
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    if (isAnyCellSelected) {
+                      onCellValueChange?.call(index + 1);
+                    }
+                  },
                   style: ElevatedButton.styleFrom(
                     shape: const CircleBorder(),
                     padding: const EdgeInsets.all(0),
-                    backgroundColor: Theme.of(context).colorScheme.primary,
+                    backgroundColor: isAnyCellSelected
+                        ? Theme.of(context).colorScheme.primary
+                        : Colors.grey.shade400,
                     foregroundColor: Colors.white,
                   ),
                   child: Text(

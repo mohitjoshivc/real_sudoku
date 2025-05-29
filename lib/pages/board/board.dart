@@ -13,6 +13,34 @@ class Board extends StatefulWidget {
 
 class _BoardState extends State<Board> {
   late List<List<int>> _sudokuGrid;
+  final Map<String, int?> selectedCell = {
+    'row': null,
+    'col': null,
+  };
+
+  void handleCellSelection(int row, int col) {
+    if (selectedCell['row'] == row && selectedCell['col'] == col) {
+      // Deselect the cell if it's already selected
+      setState(() {
+        selectedCell['row'] = null;
+        selectedCell['col'] = null;
+      });
+      return;
+    }
+    setState(() {
+      selectedCell['row'] = row;
+      selectedCell['col'] = col;
+    });
+  }
+
+  void handleCellValueChange(int value) {
+    if (selectedCell['row'] == null || selectedCell['col'] == null) return;
+    final row = selectedCell['row']!;
+    final col = selectedCell['col']!;
+    setState(() {
+      _sudokuGrid[row][col] = value;
+    });
+  }
 
   @override
   void initState() {
@@ -39,9 +67,14 @@ class _BoardState extends State<Board> {
       body: Column(
         children: [
           SudokuBoard(
-            sudokuGrid: _sudokuGrid,
+              sudokuGrid: _sudokuGrid,
+              selectedCell: selectedCell,
+              onCellPress: handleCellSelection),
+          SudokuActions(
+            isAnyCellSelected:
+                selectedCell['row'] != null && selectedCell['col'] != null,
+            onCellValueChange: handleCellValueChange,
           ),
-          const SudokuActions(),
         ],
       ),
     );
